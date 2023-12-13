@@ -101,7 +101,6 @@
   margin-right: 0.5rem;
 }
 
-
 .listItems:nth-child(3) > .listItemsImg {
   margin-right: 0.75rem;
 }
@@ -169,14 +168,19 @@
   position: relative;
 }
 
-.inp > input {
+.inp > textarea {
   width: calc(100% - 3rem);
+  overflow-y: hidden;
+  max-height: 200px;
+  min-height: 50px;
+  height: auto;
   outline: none;
-  padding: 1.25rem;
+  padding: 0.5rem;
   color: white;
+  resize: none;
 }
 
-.inp > input {
+.inp > textarea {
   background: transparent;
   border: none;
 }

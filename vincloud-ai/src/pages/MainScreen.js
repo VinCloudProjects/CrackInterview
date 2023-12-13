@@ -36,13 +36,14 @@ function MainScreen() {
   }, [isRecording, resetTranscript]);
 
   const handleSend = async () => {
-    setInput("")
+    setInput("");
     const text = input;
     setShowMic(false);
     stopListening();
     setMessages([...messages, { text: text, isBot: false }]);
     const res = sendMessageToOpenAI(text);
     res.then((res) => {
+      resetTranscript();
       setMessages([
         ...messages,
         { text: text, isBot: false },
@@ -56,12 +57,11 @@ function MainScreen() {
   }
 
   const handleInput = (e) => {
-    const trimmedValue = e.target.value?.replace(/^\s+/g, "");
+    const trimmedValue = e?.target?.value?.replace(/^\s+/g, "");
     setInput(trimmedValue);
   };
 
   const startListening = () => {
-    setInput("")
     SpeechRecognition.startListening({
       continuous: true,
       language: "en-IN",
@@ -109,6 +109,7 @@ function MainScreen() {
         startListening={startListening}
         stopListening={stopListening}
         inputRef={inputRef}
+        resetTranscript={resetTranscript}
       />
     </div>
   );

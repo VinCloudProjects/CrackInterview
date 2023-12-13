@@ -14,14 +14,23 @@ function Chat({
   startListening,
   stopListening,
   inputRef,
+  resetTranscript,
 }) {
   useEffect(() => {
     msgEnd.current.scrollIntoView();
   }, [messages, msgEnd]);
 
+  useEffect(() => {
+    inputRef.current.scrollTop = inputRef.current.scrollHeight;
+  }, [input, inputRef]);
+
   const handleEnter = async (e) => {
+    console.log(e.key);
     if (e.key === "Enter") {
       await handleSend();
+    }
+    if (e.key === "Backspace") {
+      await resetTranscript();
     }
   };
 
@@ -49,7 +58,7 @@ function Chat({
 
       <div className="chatFooter">
         <div className="inp">
-          <input
+          <textarea
             type="text"
             value={input}
             onChange={handleInput}
