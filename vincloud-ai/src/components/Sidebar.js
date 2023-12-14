@@ -14,7 +14,7 @@ function SideBar({ messages, handleQuery }) {
       <div className="upperSide">
         <div className="upperSideTop">
           <img src={gptLogo} alt="Logo" className="logo" />
-          <span className="brand">Vincloud AI</span>
+          <span className="brand">Interview AI</span>
         </div>
 
         <button

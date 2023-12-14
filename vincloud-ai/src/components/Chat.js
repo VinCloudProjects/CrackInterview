@@ -24,6 +24,10 @@ function Chat({
     inputRef.current.scrollTop = inputRef.current.scrollHeight;
   }, [input, inputRef]);
 
+  useEffect(() => {
+    inputRef.current.focus();
+  }, [inputRef]);
+
   const handleEnter = async (e) => {
     console.log(e.key);
     if (e.key === "Enter") {

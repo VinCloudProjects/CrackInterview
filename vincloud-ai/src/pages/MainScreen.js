@@ -6,6 +6,8 @@ import SpeechRecognition, {
 import { sendMessageToOpenAI } from "../services/services";
 import SideBar from "../components/Sidebar";
 import Chat from "../components/Chat";
+import Login from "./Login";
+import { Box } from "@mui/material";
 
 function MainScreen() {
   const [input, setInput] = useState("");
@@ -18,6 +20,15 @@ function MainScreen() {
 
   const [showMic, setShowMic] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
+
+  const [interviewContext, setInterviewContext] = useState({
+    role: "",
+    designation: "",
+    primarySkills: [],
+    secondarySkills: [],
+    additionalSkills: [],
+  });
+  const [showInfo, setShowInfo] = useState(false);
 
   let { transcript, browserSupportsSpeechRecognition, resetTranscript } =
     useSpeechRecognition();
@@ -97,20 +108,42 @@ function MainScreen() {
   };
 
   return (
-    <div className="container">
-      <SideBar messages={messages} handleQuery={handleQuery} />
-      <Chat
-        messages={messages}
-        msgEnd={msgEnd}
-        handleSend={handleSend}
-        handleInput={handleInput}
-        input={input}
-        showMic={showMic}
-        startListening={startListening}
-        stopListening={stopListening}
-        inputRef={inputRef}
-        resetTranscript={resetTranscript}
-      />
+    <div>
+      {showInfo ? (
+        <Box className="container">
+          <SideBar messages={messages} handleQuery={handleQuery} />
+          <Chat
+            messages={messages}
+            msgEnd={msgEnd}
+            handleSend={handleSend}
+            handleInput={handleInput}
+            input={input}
+            showMic={showMic}
+            startListening={startListening}
+            stopListening={stopListening}
+            inputRef={inputRef}
+            resetTranscript={resetTranscript}
+          />
+        </Box>
+      ) : (
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+          }}
+          className="login"
+        >
+          <Login
+            interviewContext={interviewContext}
+            setInterviewContext={setInterviewContext}
+            setShowInfo={setShowInfo}
+            setInput={setInput}
+            handleSend = {handleSend}
+          />
+        </Box>
+      )}
     </div>
   );
 }
