@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import MultipleSelectChip from "../components/MultipleSelectChip";
 import MuiSelect from "../components/MuiSelect";
-import { Button, Paper, Typography } from "@mui/material";
+import { Paper, Typography } from "@mui/material";
+import { sendMessageToOpenAI } from "../services/services";
 
 const skills = [
   "React",
@@ -50,14 +51,71 @@ function Login({
   interviewContext,
   setInterviewContext,
   setShowInfo,
+  input,
   setInput,
+  setShowMic,
+  stopListening,
+  messages,
+  setMessages,
+  resetTranscript,
 }) {
+  const [errorText, setErrorText] = useState({
+    role: false,
+    designation: false,
+    primarySkills: false,
+  });
+
+  const handleInputSend = async (inputText) => {
+    setInput("");
+    const text = inputText;
+    setShowMic(false);
+    stopListening();
+    setMessages([...messages, { text: text, isBot: false }]);
+    const res = sendMessageToOpenAI(text);
+    res.then((res) => {
+      resetTranscript();
+      setMessages([
+        ...messages,
+        { text: text, isBot: false },
+        { text: res, isBot: true },
+      ]);
+    });
+  };
+
   const handleShowInfo = () => {
+    let dummyError = {
+      role: false,
+      designation: false,
+      primarySkills: false,
+    };
+    interviewContext.role.length === 0
+      ? (dummyError.role = true)
+      : (dummyError.role = false);
+    interviewContext.designation.length === 0
+      ? (dummyError.designation = true)
+      : (dummyError.designation = false);
+    interviewContext.primarySkills.length === 0
+      ? (dummyError.primarySkills = true)
+      : (dummyError.primarySkills = false);
+    setErrorText(dummyError);
     if (
-      Object.values(interviewContext).every((element) => element.length > 0)
+      interviewContext.role.length > 0 &&
+      interviewContext.designation.length > 0 &&
+      interviewContext.primarySkills.length > 0
     ) {
       setShowInfo(true);
       setInput(
+        `Present my role is ${interviewContext.role}, I have applied for the ${
+          interviewContext.designation
+        }. And my primary skills ${interviewContext.primarySkills.join(
+          ","
+        )},secondary skills ${interviewContext.secondarySkills.join(
+          ","
+        )} and additional skills are ${interviewContext.additionalSkills.join(
+          ","
+        )} lets start an interview for ${interviewContext.designation}.`
+      );
+      handleInputSend(
         `Present my role is ${interviewContext.role}, I have applied for the ${
           interviewContext.designation
         }. And my primary skills ${interviewContext.primarySkills.join(
@@ -73,14 +131,25 @@ function Login({
 
   return (
     <div>
-      <Paper sx={{ padding: "2rem" }}>
+      <Paper
+        sx={{
+          padding: "2rem",
+          height: "95vh",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          borderRadius: "3rem",
+        }}
+      >
         <Typography
           sx={{
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            fontSize: "1.8rem",
+            fontSize: "3rem",
           }}
+          // variant="h4"
         >
           Interview AI
         </Typography>
@@ -91,6 +160,9 @@ function Login({
           name="role"
           interviewContext={interviewContext}
           setInterviewContext={setInterviewContext}
+          required={true}
+          errorText={errorText.role}
+          setErrorText={setErrorText}
         />
         <MuiSelect
           label="Interview Designation"
@@ -99,6 +171,9 @@ function Login({
           name="designation"
           interviewContext={interviewContext}
           setInterviewContext={setInterviewContext}
+          required={true}
+          errorText={errorText.designation}
+          setErrorText={setErrorText}
         />
         <MultipleSelectChip
           label="Primary Skills"
@@ -107,6 +182,9 @@ function Login({
           name="primarySkills"
           interviewContext={interviewContext}
           setInterviewContext={setInterviewContext}
+          required={true}
+          errorText={errorText.primarySkills}
+          setErrorText={setErrorText}
         />
 
         <MultipleSelectChip
@@ -116,6 +194,7 @@ function Login({
           name="secondarySkills"
           interviewContext={interviewContext}
           setInterviewContext={setInterviewContext}
+          required={false}
         />
 
         <MultipleSelectChip
@@ -125,19 +204,11 @@ function Login({
           name="additionalSkills"
           interviewContext={interviewContext}
           setInterviewContext={setInterviewContext}
+          required={false}
         />
-        <Button
-          sx={{
-            width: "100%",
-            fontSize: "1.2rem",
-            marginTop: "0.8rem",
-            bgcolor: "#5a4bff",
-          }}
-          onClick={handleShowInfo}
-          variant="contained"
-        >
+        <button onClick={handleShowInfo} className="startInterview">
           Start Interview
-        </Button>
+        </button>
       </Paper>
     </div>
   );

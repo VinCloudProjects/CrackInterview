@@ -22,6 +22,8 @@ export default function MuiSelect({
   interviewContext,
   setInterviewContext,
   name,
+  required,
+  errorText,
 }) {
   const [selected, setSelected] = useState(selectedItems);
 
@@ -34,22 +36,23 @@ export default function MuiSelect({
   };
 
   return (
-    <div>
-      <FormControl sx={{ m: 1, width: 300 }}>
-        <InputLabel sx={{fontSize:"1.3rem"}}>{label}</InputLabel>
-        <Select
-          value={selected}
-          onChange={handleChange}
-          input={<OutlinedInput sx={{fontSize:"1.3rem"}} label={label} />}
-          MenuProps={MenuProps}
-        >
-          {items.map((item) => (
-            <MenuItem sx={{fontSize:"1.3rem"}} key={item} value={item}>
-              {item}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-    </div>
+    <FormControl sx={{ m: 1 }} fullWidth required={required}>
+      <InputLabel sx={{ fontSize: "1.3rem" }}>{label}</InputLabel>
+      <Select
+        value={selected}
+        onChange={handleChange}
+        input={<OutlinedInput sx={{ fontSize: "1.3rem" }} label={label} />}
+        MenuProps={MenuProps}
+      >
+        {items.map((item) => (
+          <MenuItem sx={{ fontSize: "1.3rem" }} key={item} value={item}>
+            {item}
+          </MenuItem>
+        ))}
+      </Select>
+      {errorText && (
+        <div style={{ color: "red" }}>Please enter this required field</div>
+      )}
+    </FormControl>
   );
 }

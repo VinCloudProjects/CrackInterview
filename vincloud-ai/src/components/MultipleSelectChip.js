@@ -24,6 +24,8 @@ export default function ReusableSelectChip({
   interviewContext,
   setInterviewContext,
   name,
+  required,
+  errorText,
 }) {
   const [personName, setPersonName] = useState(selectedItems);
 
@@ -42,25 +44,24 @@ export default function ReusableSelectChip({
   };
 
   return (
-    <div>
-      <FormControl sx={{ m: 1, width: 300 }}>
-        <InputLabel sx={{ fontSize: "1.3rem" }}>{label}</InputLabel>
-        <Select
-          multiple
-          value={personName}
-          onChange={handleChange}
-          input={<OutlinedInput sx={{ fontSize: "1.3rem" }} label={label} />}
-          renderValue={(selected) => selected.join(", ")}
-          MenuProps={MenuProps}
-        >
-          {items.map((name) => (
-            <MenuItem key={name} value={name}>
-              <Checkbox size="small" checked={personName.includes(name)} />
-              <ListItemText primary={name} />
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-    </div>
+    <FormControl sx={{ m: 1 }} fullWidth required={required}>
+      <InputLabel sx={{ fontSize: "1.3rem" }}>{label}</InputLabel>
+      <Select
+        multiple
+        value={personName}
+        onChange={handleChange}
+        input={<OutlinedInput sx={{ fontSize: "1.3rem" }} label={label} />}
+        renderValue={(selected) => selected.join(", ")}
+        MenuProps={MenuProps}
+      >
+        {items.map((name) => (
+          <MenuItem key={name} value={name}>
+            <Checkbox size="small" checked={personName.includes(name)} />
+            <ListItemText primary={name} />
+          </MenuItem>
+        ))}
+      </Select>
+      {errorText && <div style={{ color: "red" }}>Please enter this required field</div>}
+    </FormControl>
   );
 }

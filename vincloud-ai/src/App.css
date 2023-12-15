@@ -9,7 +9,10 @@ html {
 }
 
 body {
-  background: rgb(3, 0, 31);
+  /* background: rgb(3, 0, 31); */
+  background: #c6d7eb;
   color: white;
   font-family: "Poppins", sans-serif;
 }
+
+

@@ -4,18 +4,18 @@ import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
 import { sendMessageToOpenAI } from "../services/services";
-import SideBar from "../components/Sidebar";
+// import SideBar from "../components/Sidebar";
 import Chat from "../components/Chat";
 import Login from "./Login";
-import { Box } from "@mui/material";
+import { Box, Container } from "@mui/material";
 
 function MainScreen() {
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState([
-    {
-      text: "ChatGPT is a language model developed by OpenAI, based on the GPT-3.5 architecture. GPT stands for Generative Pre-trained Transformer, and it's a type of artificial intelligence model designed for natural language processing tasks.",
-      isBot: true,
-    },
+    // {
+    //   text: "ChatGPT is a language model developed by OpenAI, based on the GPT-3.5 architecture. GPT stands for Generative Pre-trained Transformer, and it's a type of artificial intelligence model designed for natural language processing tasks.",
+    //   isBot: true,
+    // },
   ]);
 
   const [showMic, setShowMic] = useState(false);
@@ -93,25 +93,25 @@ function MainScreen() {
     setIsRecording(false);
   };
 
-  const handleQuery = async (e) => {
-    setInput("");
-    const text = e.target.value;
-    setMessages([...messages, { text: text, isBot: false }]);
-    const res = sendMessageToOpenAI(text);
-    res.then((res) => {
-      setMessages([
-        ...messages,
-        { text: text, isBot: false },
-        { text: res, isBot: true },
-      ]);
-    });
-  };
+  // const handleQuery = async (e) => {
+  //   setInput("");
+  //   const text = e.target.value;
+  //   setMessages([...messages, { text: text, isBot: false }]);
+  //   const res = sendMessageToOpenAI(text);
+  //   res.then((res) => {
+  //     setMessages([
+  //       ...messages,
+  //       { text: text, isBot: false },
+  //       { text: res, isBot: true },
+  //     ]);
+  //   });
+  // };
 
   return (
-    <div>
+    <Container maxWidth="sm" className="screenContainer">
       {showInfo ? (
         <Box className="container">
-          <SideBar messages={messages} handleQuery={handleQuery} />
+          {/* <SideBar messages={messages} handleQuery={handleQuery} /> */}
           <Chat
             messages={messages}
             msgEnd={msgEnd}
@@ -126,25 +126,22 @@ function MainScreen() {
           />
         </Box>
       ) : (
-        <Box
-          sx={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-          }}
-          className="login"
-        >
+        <Box>
           <Login
             interviewContext={interviewContext}
             setInterviewContext={setInterviewContext}
             setShowInfo={setShowInfo}
+            input={input}
             setInput={setInput}
-            handleSend = {handleSend}
+            setShowMic={setShowMic}
+            stopListening={stopListening}
+            messages={messages}
+            setMessages={setMessages}
+            resetTranscript={resetTranscript}
           />
         </Box>
       )}
-    </div>
+    </Container>
   );
 }
 
