@@ -4,7 +4,6 @@ import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
 import { sendMessageToOpenAI } from "../services/services";
-// import SideBar from "../components/Sidebar";
 import Chat from "../components/Chat";
 import Login from "./Login";
 import { Box, Container } from "@mui/material";

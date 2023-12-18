@@ -1,16 +1,15 @@
 .container {
   min-height: 95vh;
   display: flex;
-  /* background: rgb(3, 0, 31); */
-  /* background: lightgray; */
 }
 
-.screenContainer{
+.screenContainer {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
   height: 95vh;
+  padding: 0 !important;
 }
 
 .sideBar {
@@ -49,7 +48,6 @@
 
 .midBtn {
   background: #e3a827;
-  /* background: gray; */
   border: none;
   color: white;
   cursor: pointer;
@@ -62,6 +60,10 @@
   margin: 0 auto;
   border-radius: 0.5rem;
   margin-right: 2rem;
+}
+
+.midBtn:hover {
+  opacity: 0.5;
 }
 
 .upperSideBottom {
@@ -132,7 +134,6 @@
   overflow-y: scroll;
   scroll-behavior: smooth;
   width: 100%;
-  /* max-width: 70rem; */
   height: calc(95vh - 17rem);
 }
 
@@ -141,9 +142,7 @@
 }
 
 .chat {
-  margin: 1rem;
-  /* padding: 2rem 3rem; */
-  padding: 1rem;
+  padding: 2rem;
   font-size: 1.2rem;
   display: flex;
   align-items: flex-start;
@@ -158,7 +157,6 @@
 }
 
 .bot {
-  /* background: rgba(28, 30, 58, 1); */
   width: fit-content;
   border-radius: 0.5rem;
 }
@@ -173,19 +171,15 @@
 }
 
 .inp {
-  padding: 0.5rem;
-  /* background: rgba(28, 30, 58, 1); */
-  /* background: #c6d7eb; */
+  padding: 2rem 2rem 0rem 2rem;
   display: flex;
   align-items: center;
   border-radius: 0.5rem;
-  /* width: 68rem; */
   width: 100%;
   position: relative;
 }
 
 .inp > textarea {
-  /* width: calc(100% - 3rem); */
   width: 100%;
   overflow-y: hidden;
   max-height: 200px;
@@ -193,17 +187,11 @@
   height: auto;
   outline: none;
   padding: 0.5rem;
-  /* color: white; */
   color: rgba(0, 0, 0, 0.87);
   border: 1px solid gray;
   resize: none;
   border-radius: 4px;
 }
-
-/* .inp > textarea {
-  background: transparent;
-  border: none;
-} */
 
 .chatFooter > p {
   margin: 0.5rem 0;
@@ -211,7 +199,7 @@
 
 .send-icon {
   position: absolute;
-  right: 2%;
+  right: 5%;
   color: gray;
   font-size: x-large !important;
   margin-bottom: 0.5rem;
@@ -226,11 +214,11 @@
 .buttonsGroup {
   display: flex;
   margin-top: 1rem;
+  padding-bottom: 2rem;
 }
 
 .startBtn {
   background: #5a4bff;
-  /* background: gray; */
   border: none;
   color: white;
   cursor: pointer;
@@ -245,9 +233,12 @@
   margin-right: 2rem;
 }
 
+.startBtn:hover {
+  opacity: 0.5;
+}
+
 .startInterview {
   background: #5a4bff;
-  /* background: gray; */
   border: none;
   color: white;
   cursor: pointer;
@@ -265,7 +256,6 @@
 
 .stopBtn {
   background: #e32763;
-  /* background: gray; */
   border: none;
   color: white;
   cursor: pointer;
@@ -277,6 +267,9 @@
   justify-content: center;
   margin: 0 auto;
   border-radius: 0.5rem;
+}
+.stopBtn:hover {
+  opacity: 0.5;
 }
 
 .micIcon {

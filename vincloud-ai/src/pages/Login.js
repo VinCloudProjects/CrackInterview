@@ -104,28 +104,36 @@ function Login({
       interviewContext.primarySkills.length > 0
     ) {
       setShowInfo(true);
-      setInput(
-        `Present my role is ${interviewContext.role}, I have applied for the ${
-          interviewContext.designation
-        }. And my primary skills ${interviewContext.primarySkills.join(
-          ","
-        )},secondary skills ${interviewContext.secondarySkills.join(
-          ","
-        )} and additional skills are ${interviewContext.additionalSkills.join(
-          ","
-        )} lets start an interview for ${interviewContext.designation}.`
-      );
-      handleInputSend(
-        `Present my role is ${interviewContext.role}, I have applied for the ${
-          interviewContext.designation
-        }. And my primary skills ${interviewContext.primarySkills.join(
-          ","
-        )},secondary skills ${interviewContext.secondarySkills.join(
-          ","
-        )} and additional skills are ${interviewContext.additionalSkills.join(
-          ","
-        )} lets start an interview for ${interviewContext.designation}.`
-      );
+
+      let primarySkillsLength = interviewContext.primarySkills.length;
+      let secondarySkillsLength = interviewContext.secondarySkills.length;
+      let additionalSkillsLength = interviewContext.additionalSkills.length;
+
+      let text = `Present my role is ${
+        interviewContext.role
+      }, I have applied for the ${
+        interviewContext.designation
+      } role. And my primary ${
+        primarySkillsLength === 1
+          ? "skill is "
+          : primarySkillsLength !== 0 && "skills are"
+      } ${interviewContext.primarySkills.join(",") + ""}${
+        secondarySkillsLength > 0
+          ? secondarySkillsLength === 1
+            ? ". Secondary skill is "
+            : secondarySkillsLength !== 0 && ". Secondary skills are "
+          : ""
+      }${interviewContext.secondarySkills.join(",")}${
+        additionalSkillsLength > 0
+          ? additionalSkillsLength === 1
+            ? " and additional skill is "
+            : additionalSkillsLength !== 0 && " and additional skills are "
+          : ""
+      }${
+        interviewContext.additionalSkills.join(",") + "."
+      } Lets start an interview for ${interviewContext.designation}.`;
+      setInput(text);
+      handleInputSend(text);
     }
   };
 
